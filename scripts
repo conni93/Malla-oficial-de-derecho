@@ -1,0 +1,26 @@
+const ramos = document.querySelectorAll('.ramo');
+
+function updateEstado() {
+  ramos.forEach(ramo => {
+    const prer = ramo.dataset.prer;
+    if (prer) {
+      const prerequisito = document.querySelector(`.ramo[data-nombre="${prer}"]`);
+      const aprobado = prerequisito.classList.contains('aprobado');
+      if (!aprobado) {
+        ramo.classList.add('bloqueado');
+      } else {
+        ramo.classList.remove('bloqueado');
+      }
+    }
+  });
+}
+
+ramos.forEach(ramo => {
+  ramo.addEventListener('click', () => {
+    if (ramo.classList.contains('bloqueado')) return;
+    ramo.classList.toggle('aprobado');
+    updateEstado();
+  });
+});
+
+updateEstado();
